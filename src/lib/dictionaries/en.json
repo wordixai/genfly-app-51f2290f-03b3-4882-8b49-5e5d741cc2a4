@@ -1,0 +1,256 @@
+{
+  "common": {
+    "appName": "RealEstate Platform",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "notFound": "Not found",
+    "currency": {
+      "USD": "$",
+      "EUR": "€",
+      "GBP": "£",
+      "JPY": "¥",
+      "AED": "د.إ"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "properties": "Properties",
+    "buy": "Buy",
+    "rent": "Rent",
+    "sell": "Sell",
+    "agents": "Agents",
+    "about": "About",
+    "contact": "Contact",
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "signup": "Sign Up",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "home": {
+    "hero": {
+      "title": "Find Your Dream Home",
+      "subtitle": "Discover thousands of properties for sale and rent across the country"
+    },
+    "featured": {
+      "title": "Featured Properties",
+      "viewAll": "View all properties"
+    },
+    "features": {
+      "title": "Why Choose Us",
+      "items": [
+        {
+          "icon": "🏠",
+          "title": "Wide Selection",
+          "description": "Browse thousands of listings from verified owners and agents"
+        },
+        {
+          "icon": "🔍",
+          "title": "Smart Search",
+          "description": "Find exactly what you're looking for with our advanced filters"
+        },
+        {
+          "icon": "💼",
+          "title": "Expert Agents",
+          "description": "Get help from our network of professional real estate agents"
+        }
+      ]
+    },
+    "testimonials": {
+      "title": "What Our Clients Say",
+      "items": [
+        {
+          "name": "John Smith",
+          "location": "New York, NY",
+          "text": "I found my dream apartment in just two weeks. The platform made it so easy to filter and find exactly what I was looking for."
+        },
+        {
+          "name": "Sarah Johnson",
+          "location": "Los Angeles, CA",
+          "text": "The virtual tours saved me so much time. I was able to narrow down my choices before physically visiting any properties."
+        },
+        {
+          "name": "Michael Brown",
+          "location": "Chicago, IL",
+          "text": "As a first-time homebuyer, I appreciated the wealth of information and resources available. Made the whole process less intimidating."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to Find Your Perfect Home?",
+      "description": "Start your search today or list your property with us",
+      "browseProperties": "Browse Properties",
+      "contactUs": "Contact Us"
+    }
+  },
+  "search": {
+    "placeholder": "Search by city, address, or ZIP code",
+    "filters": {
+      "propertyType": "Property Type",
+      "priceRange": "Price Range",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "amenities": "Amenities",
+      "moreFilters": "More Filters",
+      "apply": "Apply Filters",
+      "clear": "Clear All"
+    },
+    "results": {
+      "showing": "Showing {count} results",
+      "noResults": "No properties found matching your criteria",
+      "sortBy": "Sort by"
+    }
+  },
+  "properties": {
+    "title": "Browse Properties",
+    "filters": {
+      "title": "Filters",
+      "propertyType": "Property Type",
+      "priceRange": "Price Range",
+      "bedrooms": "Bedrooms",
+      "bathrooms": "Bathrooms",
+      "amenities": "Amenities",
+      "status": "Status",
+      "apply": "Apply Filters",
+      "clear": "Clear All"
+    },
+    "sortOptions": {
+      "newest": "Newest",
+      "priceLowToHigh": "Price: Low to High",
+      "priceHighToLow": "Price: High to Low",
+      "mostPopular": "Most Popular"
+    },
+    "noResults": "No properties found matching your criteria"
+  },
+  "propertyDetails": {
+    "overview": "Overview",
+    "description": "Description",
+    "features": "Features",
+    "price": "Price",
+    "size": "Size",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "yearBuilt": "Year Built",
+    "propertyType": "Property Type",
+    "status": "Status"
+  },
+  "propertyAmenities": {
+    "title": "Amenities",
+    "nearby": "Nearby Amenities"
+  },
+  "propertyLocation": {
+    "title": "Location",
+    "address": "Address",
+    "neighborhood": "Neighborhood",
+    "schools": "Schools",
+    "transportation": "Transportation"
+  },
+  "propertyContact": {
+    "title": "Contact Agent",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "send": "Send Message",
+    "schedule": "Schedule a Tour",
+    "call": "Call Agent"
+  },
+  "propertyReviews": {
+    "title": "Reviews",
+    "writeReview": "Write a Review",
+    "noReviews": "No reviews yet"
+  },
+  "similarProperties": {
+    "title": "Similar Properties",
+    "viewMore": "View More"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "stats": {
+      "title": "Overview",
+      "properties": "Properties",
+      "tenants": "Tenants",
+      "income": "Monthly Income",
+      "expenses": "Monthly Expenses"
+    },
+    "properties": {
+      "title": "Your Properties",
+      "viewAll": "View All",
+      "addNew": "Add New Property",
+      "noProperties": "No properties found"
+    },
+    "tasks": {
+      "title": "Tasks",
+      "viewAll": "View All",
+      "addNew": "Add New Task",
+      "noTasks": "No tasks found",
+      "status": {
+        "open": "Open",
+        "inProgress": "In Progress",
+        "completed": "Completed"
+      }
+    },
+    "payments": {
+      "title": "Recent Payments",
+      "viewAll": "View All",
+      "noPayments": "No payments found",
+      "status": {
+        "pending": "Pending",
+        "paid": "Paid",
+        "failed": "Failed"
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "email": "Email",
+      "password": "Password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "submit": "Login",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up"
+    },
+    "register": {
+      "title": "Create an Account",
+      "name": "Full Name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "userType": "I am a",
+      "terms": "I agree to the Terms of Service and Privacy Policy",
+      "submit": "Sign Up",
+      "haveAccount": "Already have an account?",
+      "login": "Login"
+    }
+  },
+  "footer": {
+    "company": {
+      "title": "Company",
+      "about": "About Us",
+      "careers": "Careers",
+      "press": "Press",
+      "blog": "Blog"
+    },
+    "support": {
+      "title": "Support",
+      "help": "Help Center",
+      "contact": "Contact Us",
+      "faq": "FAQ",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "resources": {
+      "title": "Resources",
+      "guides": "Guides",
+      "research": "Research",
+      "agents": "Find an Agent",
+      "mortgage": "Mortgage Calculator"
+    },
+    "copyright": "© 2023 RealEstate Platform. All rights reserved.",
+    "language": "Language",
+    "currency": "Currency"
+  }
+}

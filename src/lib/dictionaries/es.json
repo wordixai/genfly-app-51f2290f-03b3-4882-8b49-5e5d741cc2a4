@@ -1,0 +1,256 @@
+{
+  "common": {
+    "appName": "Plataforma Inmobiliaria",
+    "loading": "Cargando...",
+    "error": "Ha ocurrido un error",
+    "notFound": "No encontrado",
+    "currency": {
+      "USD": "$",
+      "EUR": "€",
+      "GBP": "£",
+      "JPY": "¥",
+      "AED": "د.إ"
+    }
+  },
+  "navigation": {
+    "home": "Inicio",
+    "properties": "Propiedades",
+    "buy": "Comprar",
+    "rent": "Alquilar",
+    "sell": "Vender",
+    "agents": "Agentes",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "dashboard": "Panel",
+    "login": "Iniciar sesión",
+    "signup": "Registrarse",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión"
+  },
+  "home": {
+    "hero": {
+      "title": "Encuentra tu casa soñada",
+      "subtitle": "Descubre miles de propiedades en venta y alquiler en todo el país"
+    },
+    "featured": {
+      "title": "Propiedades destacadas",
+      "viewAll": "Ver todas las propiedades"
+    },
+    "features": {
+      "title": "¿Por qué elegirnos?",
+      "items": [
+        {
+          "icon": "🏠",
+          "title": "Amplia selección",
+          "description": "Navega por miles de listados de propietarios y agentes verificados"
+        },
+        {
+          "icon": "🔍",
+          "title": "Búsqueda inteligente",
+          "description": "Encuentra exactamente lo que buscas con nuestros filtros avanzados"
+        },
+        {
+          "icon": "💼",
+          "title": "Agentes expertos",
+          "description": "Obtén ayuda de nuestra red de agentes inmobiliarios profesionales"
+        }
+      ]
+    },
+    "testimonials": {
+      "title": "Lo que dicen nuestros clientes",
+      "items": [
+        {
+          "name": "Juan Pérez",
+          "location": "Madrid, España",
+          "text": "Encontré mi apartamento soñado en solo dos semanas. La plataforma hizo que fuera muy fácil filtrar y encontrar exactamente lo que estaba buscando."
+        },
+        {
+          "name": "María García",
+          "location": "Barcelona, España",
+          "text": "Los recorridos virtuales me ahorraron mucho tiempo. Pude reducir mis opciones antes de visitar físicamente cualquier propiedad."
+        },
+        {
+          "name": "Carlos Rodríguez",
+          "location": "Valencia, España",
+          "text": "Como comprador de primera vivienda, agradecí la gran cantidad de información y recursos disponibles. Hizo que todo el proceso fuera menos intimidante."
+        }
+      ]
+    },
+    "cta": {
+      "title": "¿Listo para encontrar tu hogar perfecto?",
+      "description": "Comienza tu búsqueda hoy o lista tu propiedad con nosotros",
+      "browseProperties": "Explorar propiedades",
+      "contactUs": "Contáctanos"
+    }
+  },
+  "search": {
+    "placeholder": "Buscar por ciudad, dirección o código postal",
+    "filters": {
+      "propertyType": "Tipo de propiedad",
+      "priceRange": "Rango de precio",
+      "bedrooms": "Dormitorios",
+      "bathrooms": "Baños",
+      "amenities": "Comodidades",
+      "moreFilters": "Más filtros",
+      "apply": "Aplicar filtros",
+      "clear": "Borrar todo"
+    },
+    "results": {
+      "showing": "Mostrando {count} resultados",
+      "noResults": "No se encontraron propiedades que coincidan con tus criterios",
+      "sortBy": "Ordenar por"
+    }
+  },
+  "properties": {
+    "title": "Explorar propiedades",
+    "filters": {
+      "title": "Filtros",
+      "propertyType": "Tipo de propiedad",
+      "priceRange": "Rango de precio",
+      "bedrooms": "Dormitorios",
+      "bathrooms": "Baños",
+      "amenities": "Comodidades",
+      "status": "Estado",
+      "apply": "Aplicar filtros",
+      "clear": "Borrar todo"
+    },
+    "sortOptions": {
+      "newest": "Más recientes",
+      "priceLowToHigh": "Precio: de menor a mayor",
+      "priceHighToLow": "Precio: de mayor a menor",
+      "mostPopular": "Más populares"
+    },
+    "noResults": "No se encontraron propiedades que coincidan con tus criterios"
+  },
+  "propertyDetails": {
+    "overview": "Resumen",
+    "description": "Descripción",
+    "features": "Características",
+    "price": "Precio",
+    "size": "Tamaño",
+    "bedrooms": "Dormitorios",
+    "bathrooms": "Baños",
+    "yearBuilt": "Año de construcción",
+    "propertyType": "Tipo de propiedad",
+    "status": "Estado"
+  },
+  "propertyAmenities": {
+    "title": "Comodidades",
+    "nearby": "Comodidades cercanas"
+  },
+  "propertyLocation": {
+    "title": "Ubicación",
+    "address": "Dirección",
+    "neighborhood": "Vecindario",
+    "schools": "Escuelas",
+    "transportation": "Transporte"
+  },
+  "propertyContact": {
+    "title": "Contactar agente",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "message": "Mensaje",
+    "send": "Enviar mensaje",
+    "schedule": "Programar una visita",
+    "call": "Llamar al agente"
+  },
+  "propertyReviews": {
+    "title": "Reseñas",
+    "writeReview": "Escribir una reseña",
+    "noReviews": "Aún no hay reseñas"
+  },
+  "similarProperties": {
+    "title": "Propiedades similares",
+    "viewMore": "Ver más"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "stats": {
+      "title": "Resumen",
+      "properties": "Propiedades",
+      "tenants": "Inquilinos",
+      "income": "Ingresos mensuales",
+      "expenses": "Gastos mensuales"
+    },
+    "properties": {
+      "title": "Tus propiedades",
+      "viewAll": "Ver todas",
+      "addNew": "Añadir nueva propiedad",
+      "noProperties": "No se encontraron propiedades"
+    },
+    "tasks": {
+      "title": "Tareas",
+      "viewAll": "Ver todas",
+      "addNew": "Añadir nueva tarea",
+      "noTasks": "No se encontraron tareas",
+      "status": {
+        "open": "Abierta",
+        "inProgress": "En progreso",
+        "completed": "Completada"
+      }
+    },
+    "payments": {
+      "title": "Pagos recientes",
+      "viewAll": "Ver todos",
+      "noPayments": "No se encontraron pagos",
+      "status": {
+        "pending": "Pendiente",
+        "paid": "Pagado",
+        "failed": "Fallido"
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Iniciar sesión",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "rememberMe": "Recordarme",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "submit": "Iniciar sesión",
+      "noAccount": "¿No tienes una cuenta?",
+      "signUp": "Regístrate"
+    },
+    "register": {
+      "title": "Crear una cuenta",
+      "name": "Nombre completo",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "userType": "Soy un",
+      "terms": "Acepto los Términos de servicio y la Política de privacidad",
+      "submit": "Registrarse",
+      "haveAccount": "¿Ya tienes una cuenta?",
+      "login": "Iniciar sesión"
+    }
+  },
+  "footer": {
+    "company": {
+      "title": "Empresa",
+      "about": "Acerca de nosotros",
+      "careers": "Carreras",
+      "press": "Prensa",
+      "blog": "Blog"
+    },
+    "support": {
+      "title": "Soporte",
+      "help": "Centro de ayuda",
+      "contact": "Contáctanos",
+      "faq": "Preguntas frecuentes",
+      "privacy": "Política de privacidad",
+      "terms": "Términos de servicio"
+    },
+    "resources": {
+      "title": "Recursos",
+      "guides": "Guías",
+      "research": "Investigación",
+      "agents": "Encontrar un agente",
+      "mortgage": "Calculadora de hipotecas"
+    },
+    "copyright": "© 2023 Plataforma Inmobiliaria. Todos los derechos reservados.",
+    "language": "Idioma",
+    "currency": "Moneda"
+  }
+}

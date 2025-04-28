@@ -1,0 +1,935 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator zod {
+  provider = "node node_modules/zod-prisma"
+  output   = "./prisma/generated/zod"
+}
+
+generator jsonSchema {
+  provider = "node node_modules/prisma-json-schema-generator"
+  output   = "./json-schema"
+}
+
+// --- User & Permissions ---
+model User {
+  id                Int                 @id @default(autoincrement())
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  username          String              @unique
+  email             String              @unique
+  password          String
+  firstName         String?
+  lastName          String?
+  phone             String?
+  address           String?
+  city              String?
+  state             String?
+  zipCode           String?
+  country           String?
+  dateOfBirth       DateTime?
+  gender            String?
+  emergencyContact  String?
+  profileBio        String?
+  isActive          Boolean             @default(true)
+  userType          UserType            @default(USER)
+  roles             String[] // For multi-role support
+  avatarUrl         String?
+  lastLogin         DateTime?
+  isVerified        Boolean             @default(false)
+  subscription      Subscription?
+  permissions       Permission[]
+  properties        Property[]
+  tenants           Tenant[]
+  agreements        Agreement[]
+  payments          Payment[]
+  expenses          Expense[]
+  inspections       Inspection[]
+  messages          Message[]
+  chatRooms         ChatRoom[]
+  reservations      Reservation[]
+  listings          Listing[]
+  agentReviews      Review[]            @relation("AgentReviews")
+  reviews           Review[]            @relation("UserReviews")
+  tasks             Task[]
+  assignedTasks     Task[]              @relation("AssignedTasks")
+  reports           Report[]
+  photos            Photo[]
+  documents         Document[]
+  facilities        Facility[]
+  agencyId          Int?
+  agency            Agency?             @relation(fields: [agencyId], references: [id])
+  auditLogs         AuditLog[]
+  RentalApplication RentalApplication[]
+  metadata          Json?
+  deletedAt         DateTime?
+  Event             Event[]
+  EventAttendee     EventAttendee[]
+  Notification      Notification[]
+  Invoice           Invoice[]
+  Mention           Mention[]
+}
+
+enum UserType {
+  ADMIN
+  AGENCY
+  AGENT
+  OWNER
+  TENANT
+  BUYER
+  SELLER
+  USER
+}
+
+model Subscription {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @unique
+  plan      String
+  status    String
+  startedAt DateTime  @default(now())
+  endsAt    DateTime?
+  user      User      @relation(fields: [userId], references: [id])
+  metadata  Json?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Permission {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  action    String
+  resource  String
+  user      User      @relation(fields: [userId], references: [id])
+  metadata  Json?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+// --- Core Real Estate ---
+model Property {
+  id                Int                 @id @default(autoincrement())
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  name              String
+  address           String
+  city              String
+  state             String
+  zipCode           String
+  country           String
+  latitude          Float?
+  longitude         Float?
+  yearBuilt         Int?
+  amenities         PropertyAmenities[]
+  locationAmenities LocationAmenities[]
+  parkingSpaces     Int?
+  floorCount        Int?
+  size              Float?
+  isFurnished       Boolean?            @default(false)
+  type              PropertyType
+  status            PropertyStatus
+  ownerId           Int
+  owner             User                @relation(fields: [ownerId], references: [id])
+  facilities        Facility[]
+  agreements        Agreement[]
+  reservations      Reservation[]
+  listings          Listing[]
+  photos            Photo[]
+  documents         Document[]
+  Payment           Payment[]
+  Expense           Expense[]
+  Inspection        Inspection[]
+  Task              Task[]
+  Report            Report[]
+  metadata          Json?
+  deletedAt         DateTime?
+  Event             Event[]
+  Invoice           Invoice[]
+  Review            Review[]
+}
+
+enum PropertyType {
+  RESIDENTIAL
+  COMMERCIAL
+  INDUSTRIAL
+  LAND
+}
+
+enum PropertyAmenities {
+  wifi
+  parking
+  airConditioning
+  heating
+  kitchen
+  breakfastIncluded
+  petFriendly
+  tv
+  washer
+  dryer
+  balcony
+  fireplace
+  iron
+  hairDryer
+  coffeeMaker
+  workspace
+  elevator
+}
+
+enum LocationAmenities {
+  CityCenter
+  School
+  PoliceStation
+  FireStation
+  Park
+  Mosque
+  Church
+  Sinagog
+  Hospital
+  Pharmacy
+  Market
+  DryCenter
+}
+
+enum PropertyStatus {
+  ACTIVE
+  INACTIVE
+  MAINTENANCE
+  LISTED_FOR_SALE
+  LISTED_FOR_RENT
+  UNDER_CONTRACT
+  SOLD
+  RENTED
+}
+
+model Facility {
+  id                  Int                 @id @default(autoincrement())
+  propertyId          Int
+  name                String
+  type                FacilityType
+  facilityNumber      String?
+  floorLevel          Int?
+  squareFeet          Int?
+  numBedrooms         Int?
+  numBathrooms        Float?
+  monthlyRent         Float?
+  isAvailable         Boolean             @default(true)
+  capacity            Int?
+  isActive            Boolean             @default(true)
+  maintenanceSchedule Json?
+  isFurnished         Boolean?            @default(false)
+  images              Json?
+  amenities           FacilityAmenities[]
+  latitude            Float?
+  longitude           Float?
+  boundary            Json?
+  property            Property            @relation(fields: [propertyId], references: [id])
+  tenants             Tenant[]
+  agreements          Agreement[]
+  reservations        Reservation[]
+  inspections         Inspection[]
+  securityDeposits    SecurityDeposit[]
+  rentalApplications  RentalApplication[]
+  photos              Photo[]
+  documents           Document[]
+  User                User?               @relation(fields: [userId], references: [id])
+  userId              Int?
+  Payment             Payment[]
+  Expense             Expense[]
+  Task                Task[]
+  Report              Report[]
+  metadata            Json?
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  deletedAt           DateTime?
+  Event               Event[]
+  Invoice             Invoice[]
+  Review              Review[]
+}
+
+enum FacilityType {
+  APARTMENT_BUILDING
+  OFFICE_BUILDING
+  COMMERCIAL_COMPLEX
+  RESIDENTIAL_BLOCK
+  VILLA
+  TOWNHOUSE
+  DORMITORY
+  HOTEL
+  HOSTEL
+  SHOPPING_CENTER
+  PARKING_GARAGE
+  OTHER
+}
+
+enum FacilityAmenities {
+  indoorPool
+  outdoorPool
+  security
+  fitnessCenter
+  groupLessons
+  spa
+  sauna
+  turkishBath
+  gym
+  restaurant
+  parkingArea
+  guestParking
+  roomService
+  concierge
+  businessCenter
+  meetingRooms
+  kidsClub
+  park
+}
+
+// --- Tenancy, Agreements, Deposits, Applications ---
+model Tenant {
+  id                    Int               @id @default(autoincrement())
+  userId                Int
+  facilityId            Int
+  leaseStart            DateTime
+  leaseEnd              DateTime
+  rentAmount            Float
+  employmentInfo        Json?
+  references            Json?
+  backgroundCheckStatus String?
+  notes                 String?
+  user                  User              @relation(fields: [userId], references: [id])
+  facility              Facility          @relation(fields: [facilityId], references: [id])
+  agreements            Agreement[]
+  payments              Payment[]
+  documents             Document[]
+  SecurityDeposit       SecurityDeposit[]
+  metadata              Json?
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+  deletedAt             DateTime?
+}
+
+model Agreement {
+  id            Int             @id @default(autoincrement())
+  propertyId    Int
+  facilityId    Int?
+  tenantId      Int?
+  userId        Int
+  type          AgreementType
+  status        AgreementStatus
+  startDate     DateTime
+  endDate       DateTime?
+  documentUrl   String?
+  renewalTerms  String?
+  noticePeriod  Int?
+  depositAmount Float?
+  property      Property        @relation(fields: [propertyId], references: [id])
+  facility      Facility?       @relation(fields: [facilityId], references: [id])
+  tenant        Tenant?         @relation(fields: [tenantId], references: [id])
+  user          User            @relation(fields: [userId], references: [id])
+  documents     Document[]
+  metadata      Json?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  deletedAt     DateTime?
+}
+
+enum AgreementType {
+  LEASE
+  SALE
+  MANAGEMENT
+  AGENCY
+  AGENT
+  RESERVATION
+}
+
+enum AgreementStatus {
+  DRAFT
+  PENDING
+  ACTIVE
+  EXPIRED
+  CANCELLED
+  COMPLETED
+}
+
+model SecurityDeposit {
+  id         Int                   @id @default(autoincrement())
+  tenantId   Int
+  facilityId Int
+  amount     Float
+  status     SecurityDepositStatus
+  datePaid   DateTime
+  refunds    Json?
+  deductions Json?
+  tenant     Tenant                @relation(fields: [tenantId], references: [id])
+  facility   Facility              @relation(fields: [facilityId], references: [id])
+  metadata   Json?
+  createdAt  DateTime              @default(now())
+  updatedAt  DateTime              @updatedAt
+  deletedAt  DateTime?
+}
+
+enum SecurityDepositStatus {
+  HELD
+  PARTIALLY_REFUNDED
+  FULLY_REFUNDED
+}
+
+model RentalApplication {
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  facilityId      Int
+  status          ApplicationStatus
+  applicationDate DateTime          @default(now())
+  documents       Json?
+  user            User              @relation(fields: [userId], references: [id])
+  facility        Facility          @relation(fields: [facilityId], references: [id])
+  metadata        Json?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?
+}
+
+enum ApplicationStatus {
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  WAITLISTED
+  CANCELLED
+}
+
+// --- Financials ---
+model Payment {
+  id            Int           @id @default(autoincrement())
+  userId        Int
+  tenantId      Int?
+  reservationId Int?
+  propertyId    Int?
+  facilityId    Int?
+  amount        Float
+  currency      String
+  paymentDate   DateTime
+  dueDate       DateTime?
+  method        PaymentMethod
+  status        PaymentStatus
+  reference     String?
+  notes         String?
+  user          User          @relation(fields: [userId], references: [id])
+  tenant        Tenant?       @relation(fields: [tenantId], references: [id])
+  reservation   Reservation?  @relation(fields: [reservationId], references: [id])
+  property      Property?     @relation(fields: [propertyId], references: [id])
+  facility      Facility?     @relation(fields: [facilityId], references: [id])
+  expenses      Expense[]
+  metadata      Json?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  deletedAt     DateTime?
+  Invoice       Invoice[]
+}
+
+enum PaymentMethod {
+  CASH
+  CHECK
+  CREDIT_CARD
+  BANK_TRANSFER
+  PAYPAL
+  STRIPE
+  OTHER
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+  CANCELLED
+}
+
+model Expense {
+  id            Int             @id @default(autoincrement())
+  userId        Int
+  propertyId    Int?
+  facilityId    Int?
+  reservationId Int?
+  paymentId     Int?
+  amount        Float
+  currency      String
+  category      ExpenseCategory
+  status        ExpenseStatus
+  description   String?
+  expenseDate   DateTime
+  dueDate       DateTime?
+  vendor        String?
+  reference     String?
+  notes         String?
+  user          User            @relation(fields: [userId], references: [id])
+  property      Property?       @relation(fields: [propertyId], references: [id])
+  facility      Facility?       @relation(fields: [facilityId], references: [id])
+  reservation   Reservation?    @relation(fields: [reservationId], references: [id])
+  payment       Payment?        @relation(fields: [paymentId], references: [id])
+  metadata      Json?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  deletedAt     DateTime?
+}
+
+enum ExpenseCategory {
+  RENT
+  UTILITY
+  MAINTENANCE
+  CLEANING
+  INSURANCE
+  TAXES
+  MANAGEMENT_FEE
+  BOOKING_FEE
+  SERVICE_FEE
+  LATE_FEE
+  REFUND
+  OTHER
+}
+
+enum ExpenseStatus {
+  DUE
+  PENDING
+  PAID
+  PARTIALLY_PAID
+  OVERDUE
+  CANCELLED
+}
+
+// --- Inspections ---
+model Inspection {
+  id             Int              @id @default(autoincrement())
+  propertyId     Int
+  facilityId     Int?
+  userId         Int
+  inspectionDate DateTime
+  type           InspectionType
+  status         InspectionStatus
+  notes          String?
+  property       Property         @relation(fields: [propertyId], references: [id])
+  facility       Facility?        @relation(fields: [facilityId], references: [id])
+  user           User             @relation(fields: [userId], references: [id])
+  documents      Document[]
+  photos         Photo[]
+  metadata       Json?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  deletedAt      DateTime?
+}
+
+enum InspectionType {
+  MOVE_IN
+  MOVE_OUT
+  ROUTINE
+  MAINTENANCE
+  DAMAGE
+}
+
+enum InspectionStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+// --- Messaging (Chat, Notifications, System) ---
+model Message {
+  id          Int           @id @default(autoincrement())
+  senderId    Int
+  chatRoomId  Int?
+  content     String
+  messageType MessageType
+  status      MessageStatus
+  createdAt   DateTime      @default(now())
+  sender      User          @relation(fields: [senderId], references: [id])
+  chatRoom    ChatRoom?     @relation(fields: [chatRoomId], references: [id])
+  metadata    Json?
+  updatedAt   DateTime      @updatedAt
+  deletedAt   DateTime?
+}
+
+enum MessageType {
+  CHAT
+  SYSTEM
+  NOTIFICATION
+}
+
+enum MessageStatus {
+  SENT
+  DELIVERED
+  READ
+}
+
+model ChatRoom {
+  id        Int          @id @default(autoincrement())
+  name      String
+  type      ChatRoomType
+  isPrivate Boolean      @default(false)
+  createdAt DateTime     @default(now())
+  messages  Message[]
+  users     User[]
+  metadata  Json?
+  updatedAt DateTime     @updatedAt
+  deletedAt DateTime?
+}
+
+enum ChatRoomType {
+  GROUP
+  DIRECT
+  PROPERTY
+  FACILITY
+  LISTING
+}
+
+// --- Bookings, Listings, Tasks, Reports ---
+model Reservation {
+  id              Int               @id @default(autoincrement())
+  userId          Int
+  propertyId      Int?
+  facilityId      Int?
+  startTime       DateTime
+  endTime         DateTime
+  status          ReservationStatus
+  guestCount      Int?
+  specialRequests String?
+  user            User              @relation(fields: [userId], references: [id])
+  property        Property?         @relation(fields: [propertyId], references: [id])
+  facility        Facility?         @relation(fields: [facilityId], references: [id])
+  payments        Payment[]
+  expenses        Expense[]
+  metadata        Json?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  deletedAt       DateTime?
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model Listing {
+  id            Int           @id @default(autoincrement())
+  propertyId    Int
+  userId        Int
+  title         String
+  description   String?
+  price         Float
+  type          ListingType
+  status        ListingStatus
+  images        Json?
+  features      Json?
+  availableFrom DateTime?
+  property      Property      @relation(fields: [propertyId], references: [id])
+  user          User          @relation(fields: [userId], references: [id])
+  metadata      Json?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  deletedAt     DateTime?
+}
+
+enum ListingType {
+  RENT
+  SALE
+  BOOKING
+}
+
+enum ListingStatus {
+  DRAFT
+  ACTIVE
+  PENDING
+  CLOSED
+  EXPIRED
+}
+
+model Task {
+  id             Int           @id @default(autoincrement())
+  userId         Int
+  assignedToId   Int?
+  propertyId     Int?
+  facilityId     Int?
+  title          String
+  description    String?
+  dueDate        DateTime?
+  status         TaskStatus
+  category       TaskCategory?
+  priority       TaskPriority?
+  aiMetadata     Json?
+  recurrence     String?
+  attachments    Json?
+  estimatedHours Float?
+  user           User          @relation(fields: [userId], references: [id])
+  assignedTo     User?         @relation("AssignedTasks", fields: [assignedToId], references: [id])
+  property       Property?     @relation(fields: [propertyId], references: [id])
+  facility       Facility?     @relation(fields: [facilityId], references: [id])
+  metadata       Json?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  deletedAt      DateTime?
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum TaskStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum TaskCategory {
+  MAINTENANCE
+  REPAIR
+  CLEANING
+  INSPECTION
+  ADMINISTRATIVE
+  FINANCIAL
+  TENANT_REQUEST
+  OTHER
+}
+
+model Report {
+  id         Int       @id @default(autoincrement())
+  userId     Int
+  propertyId Int?
+  facilityId Int?
+  content    String
+  metadata   Json?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+  User       User      @relation(fields: [userId], references: [id])
+  Property   Property? @relation(fields: [propertyId], references: [id])
+  Facility   Facility? @relation(fields: [facilityId], references: [id])
+}
+
+// --- Audit Log ---
+model AuditLog {
+  id        Int       @id @default(autoincrement())
+  userId    Int?
+  action    String
+  model     String
+  modelId   Int?
+  timestamp DateTime  @default(now())
+  details   Json?
+  user      User?     @relation(fields: [userId], references: [id])
+  metadata  Json?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+// --- Agency ---
+model Agency {
+  id           Int                 @id @default(autoincrement())
+  name         String
+  address      String?
+  logoUrl      String?
+  contactEmail String?
+  contactPhone String?
+  website      String?
+  latitude     Float?
+  longitude    Float?
+  boundary     Json?
+  amenities    LocationAmenities[]
+  agents       User[] // All users with userType = AGENT, related to this agency
+  metadata     Json?
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  deletedAt    DateTime?
+}
+
+// --- Media & Documents ---
+model Photo {
+  id           Int         @id @default(autoincrement())
+  url          String
+  description  String?
+  propertyId   Int?
+  facilityId   Int?
+  userId       Int?
+  inspectionId Int?
+  metadata     Json?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  deletedAt    DateTime?
+  property     Property?   @relation(fields: [propertyId], references: [id])
+  facility     Facility?   @relation(fields: [facilityId], references: [id])
+  user         User?       @relation(fields: [userId], references: [id])
+  inspection   Inspection? @relation(fields: [inspectionId], references: [id])
+}
+
+model Document {
+  id           Int         @id @default(autoincrement())
+  url          String
+  name         String
+  type         String
+  propertyId   Int?
+  facilityId   Int?
+  userId       Int?
+  agreementId  Int?
+  inspectionId Int?
+  metadata     Json?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  deletedAt    DateTime?
+  property     Property?   @relation(fields: [propertyId], references: [id])
+  facility     Facility?   @relation(fields: [facilityId], references: [id])
+  user         User?       @relation(fields: [userId], references: [id])
+  agreement    Agreement?  @relation(fields: [agreementId], references: [id])
+  inspection   Inspection? @relation(fields: [inspectionId], references: [id])
+  Tenant       Tenant?     @relation(fields: [tenantId], references: [id])
+  tenantId     Int?
+}
+
+// --- Events ---
+model Event {
+  id          Int             @id @default(autoincrement())
+  title       String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  location    String?
+  property    Property?       @relation(fields: [propertyId], references: [id])
+  propertyId  Int?
+  facility    Facility?       @relation(fields: [facilityId], references: [id])
+  facilityId  Int?
+  organizer   User?           @relation(fields: [organizerId], references: [id])
+  organizerId Int?
+  attendees   EventAttendee[]
+  metadata    Json?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  deletedAt   DateTime?
+}
+
+model EventAttendee {
+  id        Int                 @id @default(autoincrement())
+  event     Event               @relation(fields: [eventId], references: [id])
+  eventId   Int
+  user      User                @relation(fields: [userId], references: [id])
+  userId    Int
+  status    EventAttendeeStatus @default(PENDING)
+  metadata  Json?
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+  deletedAt DateTime?
+}
+
+enum EventAttendeeStatus {
+  PENDING
+  CONFIRMED
+  DECLINED
+}
+
+// --- Notifications ---
+model Notification {
+  id         Int              @id @default(autoincrement())
+  user       User             @relation(fields: [userId], references: [id])
+  userId     Int
+  type       NotificationType
+  title      String
+  message    String
+  isRead     Boolean          @default(false)
+  createdAt  DateTime         @default(now())
+  relatedUrl String?
+  metadata   Json?
+  updatedAt  DateTime         @updatedAt
+  deletedAt  DateTime?
+}
+
+enum NotificationType {
+  SYSTEM
+  PAYMENT
+  EVENT
+  MESSAGE
+  TASK
+  OTHER
+}
+
+// --- Invoices ---
+model Invoice {
+  id          Int           @id @default(autoincrement())
+  number      String        @unique
+  user        User          @relation(fields: [userId], references: [id])
+  userId      Int
+  property    Property?     @relation(fields: [propertyId], references: [id])
+  propertyId  Int?
+  facility    Facility?     @relation(fields: [facilityId], references: [id])
+  facilityId  Int?
+  amount      Float
+  currency    String
+  status      InvoiceStatus
+  issueDate   DateTime
+  dueDate     DateTime?
+  payment     Payment?      @relation(fields: [paymentId], references: [id])
+  paymentId   Int?
+  description String?
+  metadata    Json?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  deletedAt   DateTime?
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+// --- Reviews, Hashtags, Mentions ---
+model Review {
+  id         Int       @id @default(autoincrement())
+  user       User      @relation("UserReviews", fields: [userId], references: [id])
+  userId     Int
+  property   Property? @relation(fields: [propertyId], references: [id])
+  propertyId Int?
+  facility   Facility? @relation(fields: [facilityId], references: [id])
+  facilityId Int?
+  agent      User?     @relation("AgentReviews", fields: [agentId], references: [id])
+  agentId    Int?
+  rating     Int?
+  comment    String?
+  metadata   Json?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+  hashtags   Hashtag[] @relation("ReviewHashtags")
+  mentions   Mention[] @relation("ReviewMentions")
+}
+
+model Hashtag {
+  id        Int       @id @default(autoincrement())
+  tag       String    @unique
+  reviews   Review[]  @relation("ReviewHashtags")
+  metadata  Json?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+model Mention {
+  id        Int       @id @default(autoincrement())
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int
+  review    Review    @relation("ReviewMentions", fields: [reviewId], references: [id])
+  reviewId  Int
+  metadata  Json
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
